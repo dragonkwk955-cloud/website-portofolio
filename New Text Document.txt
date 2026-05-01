@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan FIXNIKAH - Dani & Ecca</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #E50914; --red-dark: #b0060f; --gold: #c9a84c;
+            --bg: #0a0a0a; --surface: #141414; --surface2: #1e1e1e;
+            --text: #FFFFFF; --muted: #a0a0a0; --border: rgba(255,255,255,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+        /* ========== SPLASH SCREEN ========== */
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 20px; }
+        .splash-logo { font-family: 'Bebas Neue', sans-serif; color: var(--red); font-size: 4rem; letter-spacing: 6px; margin-bottom: 10px; }
+        .splash-tagline { color: var(--muted); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 40px; }
+        .splash-profiles { display: flex; align-items: center; gap: 24px; margin-bottom: 30px; }
+        .profile-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; }
+        .profile-ring { width: 90px; height: 90px; border-radius: 12px; padding: 3px; background: linear-gradient(135deg, var(--red), var(--gold)); }
+        .profile-ring img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 10px; display: block; background: #222; }
+        .profile-label { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+        .splash-amp { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; color: var(--gold); margin-top: -15px; }
+        .splash-names { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 4px; color: white; margin-bottom: 8px; }
+        .splash-date { color: var(--muted); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 40px; }
+        .btn-open { background: var(--red); border: none; color: #fff; padding: 14px 40px; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-radius: 6px; }
+
+        /* ========== MAIN CONTENT ========== */
+        #main-content { display: none; max-width: 480px; margin: 0 auto; position: relative; padding-bottom: 120px; }
+        .floating-action { position: fixed; bottom: 24px; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 100; }
+        .fab-btn { width: 48px; height: 48px; background: rgba(229,9,20,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; color: white; font-size: 1.1rem; cursor: pointer; }
+
+        /* ========== HERO ========== */
+        .hero { position: relative; height: 85vh; min-height: 500px; background-color: #111; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; background-image: url('IMG_1345.jpg'); background-size: cover; background-position: center top; filter: brightness(0.7); }
+        .hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 75%; background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.7) 50%, transparent 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; padding: 30px 24px; }
+        .hero-logo-small { font-family: 'Bebas Neue', sans-serif; color: var(--red); font-size: 2rem; letter-spacing: 4px; margin-bottom: 8px; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+        .hero-date-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+        .btn-coming-soon { background: var(--red); color: white; border: none; padding: 6px 14px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
+        .hero-date-text { font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
+        .tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-pill { background: rgba(255,255,255,0.12); padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; color: #ddd; }
+
+        /* ========== SECTIONS ========== */
+        .section-padding { padding: 36px 24px; }
+        .doc-header { display: flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 700; letter-spacing: 3px; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 12px; }
+        .doc-header .icon { color: var(--red); font-size: 1rem; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 18px; line-height: 1.2; }
+        .match-row { display: flex; align-items: center; gap: 10px; margin: 14px 0; font-size: 0.88rem; flex-wrap: wrap; }
+        .text-green { color: #46d369; font-weight: 700; }
+        .box-badge { background: #333; padding: 2px 8px; border-radius: 3px; border: 1px solid #555; font-size: 0.75rem; font-weight: 600; }
+        .doc-desc { font-size: 0.95rem; line-height: 1.7; color: #ddd; margin-bottom: 16px; }
+        .doc-quote { font-size: 0.9rem; line-height: 1.6; color: var(--muted); font-style: italic; border-left: 2px solid var(--red); padding-left: 14px; margin-top: 10px; }
+        .divider { height: 1px; background: var(--border); margin: 0 24px; }
+
+        /* ========== BRIDE & GROOM ========== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .person-card { border-radius: 10px; overflow: hidden; background: var(--surface2); }
+        .person-img-wrap { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #222; }
+        .person-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .person-info { padding: 14px; }
+        .person-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+        .person-parents { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+        .couple-photo { width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 16/9; object-position: center top; display: block; }
+
+        /* ========== TIMELINE ========== */
+        .timeline-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .timeline-flex { display: flex; gap: 16px; margin-bottom: 16px; }
+        .timeline-img { width: 110px; height: 110px; border-radius: 10px; object-fit: cover; object-position: top; background: #333; flex-shrink: 0; }
+        .timeline-info { flex: 1; }
+        .badge-red { display: inline-block; background: var(--red); color: white; padding: 3px 12px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+        .timeline-date { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; margin-bottom: 8px; color: white; }
+        .chip { display: inline-block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; margin-right: 6px; margin-bottom: 4px; }
+        .address { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+        .link-maps { color: var(--red); text-decoration: none; font-size: 0.88rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+        .btn-confirm { width: 100%; background: var(--red); color: white; border: none; padding: 16px; font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 12px; }
+
+        /* ========== DARK SECTION (NEWS & STORY) ========== */
+        .dark-section { background: linear-gradient(180deg, #0a0a1e 0%, #0d0d29 100%); border-top: 1px solid rgba(229,9,20,0.2); padding: 36px 24px; }
+        .breaking-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--red); color: white; font-size: 0.7rem; font-weight: 800; letter-spacing: 3px; padding: 5px 12px; border-radius: 3px; margin-bottom: 20px; text-transform: uppercase; }
+        .breaking-dot { width: 7px; height: 7px; background: white; border-radius: 50%; }
+        .news-main-img { width: 100%; border-radius: 10px; object-fit: cover; object-position: center top; aspect-ratio: 4/3; margin-bottom: 24px; display: block; }
+        
+        .episodes-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin: 40px 0 24px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .episode { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+        .episode:last-child { border-bottom: none; }
+        .eps-img { width: 90px; height: 115px; border-radius: 8px; object-fit: cover; object-position: top; background: #222; flex-shrink: 0; }
+        .eps-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .eps-number { font-size: 0.7rem; color: var(--red); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+        .eps-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+        .eps-year { font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+        .eps-desc { font-size: 0.82rem; color: #aaa; line-height: 1.5; }
+
+        /* ========== WEDDING GIFT ========== */
+        .gift-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 16px; }
+        .bank-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #0066AE; font-weight: bold; margin-bottom: 8px; }
+        .bank-number { font-size: 1.8rem; font-weight: 700; letter-spacing: 3px; color: var(--gold); margin-bottom: 5px; }
+        .bank-owner { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; }
+        .btn-copy { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+
+        /* ========== GUESTBOOK ========== */
+        .form-input { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 14px; border-radius: 8px; margin-bottom: 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+        .form-input:focus { outline: none; border-color: var(--red); }
+        .message-list { margin-top: 20px; max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 5px; }
+        .message-card { background: var(--surface2); padding: 15px; border-radius: 8px; border-left: 3px solid var(--red); }
+        .msg-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 5px; color: var(--gold); }
+        .msg-text { font-size: 0.85rem; color: #ddd; line-height: 1.5; }
+
+        /* ========== CLOSING PHOTO ========== */
+        .closing-photo-wrap { padding: 0 24px 36px; }
+        .closing-photo-wrap img { width: 100%; border-radius: 12px; display: block; object-fit: cover; aspect-ratio: 3/4; object-position: center top; }
+        .closing-caption { text-align: center; margin-top: 18px; font-family: 'Playfair Display', serif; font-style: italic; color: var(--muted); font-size: 0.95rem; }
+        .closing-caption strong { color: var(--gold); font-style: normal; font-size: 1.1rem; display: block; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+<audio id="bg-music" loop>
+    <source src="Rae Sremmurd - Black Beatles ft. Gucci Mane (Official Video) - RaeSremmurdVEVO.mp3" type="audio/mpeg">
+</audio>
+
+<div id="splash-screen">
+    <div class="splash-logo">FIXNIKAH</div>
+    <div class="splash-tagline">Who's watching?</div>
+
+    <div class="splash-profiles">
+        <div class="profile-wrap" onclick="bukaUndangan()">
+            <div class="profile-ring">
+                <img src="ss21.jpg" alt="Dani" onerror="this.style.background='#333'">
+            </div>
+            <span class="profile-label">Dani</span>
+        </div>
+
+        <div class="splash-amp">&</div>
+
+        <div class="profile-wrap" onclick="bukaUndangan()">
+            <div class="profile-ring">
+                <img src="WhatsApp Image 2026-04-28 at 10.29.49-fotor-bg-remover-2026042810343.png" alt="Ecca" style="object-position: top center;" onerror="this.style.background='#333'">
+            </div>
+            <span class="profile-label">Ecca</span>
+        </div>
+    </div>
+
+    <div class="splash-names">Dani & Ecca</div>
+    <div class="splash-date">24 • MEI • 2026</div>
+
+    <button class="btn-open" onclick="bukaUndangan()">Open Invitation</button>
+</div>
+
+<div id="main-content">
+
+    <div class="floating-action">
+        <button class="fab-btn" id="music-btn" onclick="toggleMusic()">🔊</button>
+    </div>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-logo-small">FIXNIKAH</div>
+            <h1 class="hero-title">Dani & Ecca:<br>Menuju Hari H</h1>
+            <div class="hero-date-row">
+                <button class="btn-coming-soon">COMING SOON</button>
+                <span class="hero-date-text">24 Mei 2026</span>
+            </div>
+            <div class="tags-row">
+                <span class="tag-pill">#getmarried</span>
+                <span class="tag-pill">#romantic</span>
+                <span class="tag-pill">#lovestory</span>
+                <span class="tag-pill">#documenter</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="doc-header"><span class="icon">▶</span> DOCUMENTER</div>
+        <h2 class="section-title" style="margin-bottom: 6px;">Dani & Ecca:<br>Sebelum Hari H</h2>
+        <div class="match-row">
+            <span class="text-green">100% match</span>
+            <span class="box-badge">SU</span>
+            <span>24 Mei 2026</span>
+            <span class="box-badge">4K</span>
+            <span class="box-badge">HD</span>
+        </div>
+        <button class="btn-confirm" style="margin-bottom: 24px;">Coming Soon — 24 Mei 2026</button>
+        <p class="doc-desc">Setelah Dani dan Ecca dipertemukan dalam situasi yang tepat, di mana keduanya telah siap untuk memulai hubungan bersama, tibalah mereka di awal perjalanan baru menuju pernikahan.</p>
+        <p class="doc-quote">"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri..." — QS. Ar-Rum: 21</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section-padding">
+        <h2 class="section-title">Bride & Groom</h2>
+        <div class="grid-2">
+            <div class="person-card">
+                <div class="person-img-wrap">
+                    <img src="ss21.jpg" alt="Dani" onerror="this.style.background='#333'">
+                </div>
+                <div class="person-info">
+                    <div class="person-name">Dani</div>
+                    <div class="person-parents">Putra dari Bapak...<br>dan Ibu...</div>
+                </div>
+            </div>
+            <div class="person-card">
+                <div class="person-img-wrap">
+                    <img src="WhatsApp Image 2026-04-28 at 10.29.49-fotor-bg-remover-2026042810343.png" alt="Ecca" style="object-position: top center;" onerror="this.style.background='#333'">
+                </div>
+                <div class="person-info">
+                    <div class="person-name">Ecca</div>
+                    <div class="person-parents">Putri dari Bapak...<br>dan Ibu...</div>
+                </div>
+            </div>
+        </div>
+        <img src="1.jpg" alt="Dani & Ecca" class="couple-photo" style="margin-top: 4px;">
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section-padding">
+        <h2 class="section-title">Timeline & Location</h2>
+        <div class="timeline-card">
+            <div class="timeline-flex">
+                <img src="1.jpg" alt="Pernikahan" class="timeline-img">
+                <div class="timeline-info">
+                    <span class="badge-red">PERNIKAHAN</span>
+                    <div class="timeline-date">24 MEI 2026</div>
+                    <span class="chip">08.00 s.d Selesai</span>
+                    <span class="chip">#WIB</span>
+                </div>
+            </div>
+            <p class="address">Bertempat di Kediaman Mempelai — Kedai Kerasa, Jl. H.Mencong, RT.002/RW.008, Paninggilan, Kec. Ciledug, Kota Tangerang, Banten 15225</p>
+            <a href="https://maps.google.com/?q=-6.242437189095004,106.71166928650919" target="_blank" class="link-maps">Buka Google Maps →</a>
+        </div>
+        <button class="btn-confirm">Konfirmasi Kehadiran</button>
+    </section>
+
+    <section class="dark-section">
+        <div class="breaking-badge">
+            <span class="breaking-dot"></span>
+            Breaking News
+        </div>
+
+        <img src="ss22.jpg" alt="Dani & Ecca" class="news-main-img">
+
+        <p class="doc-desc">Hai semuanya! Ada kabar gembira nih, kita mau ngabarin kalau kita bakal segera menikah!</p>
+        <p class="doc-desc">Maaf banget ya kalau nggak bisa ngundang kalian semua. Rencananya, kita bakal ngadain acara pernikahan yang lebih private, cuma sama keluarga dan sahabat terdekat.</p>
+        <p class="doc-desc" style="margin-top: 20px; color: var(--gold);">
+            Best regards,<br>
+            <span style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem;">Dani & Ecca</span>
+        </p>
+
+        <h2 class="episodes-title">Our Love Story</h2>
+        <div class="episode">
+            <img src="2.jpg" alt="Eps 1" class="eps-img" onerror="this.style.background='#333'">
+            <div class="eps-body">
+                <div class="eps-number">Episode 1</div>
+                <div class="eps-title">Pertemuan<br>Tak Terduga</div>
+                <div class="eps-year">2021</div>
+                <div class="eps-desc">Sebuah kebetulan menjadi saksi saat mereka pertama kali bertemu. Obrolan ringan membuka lembaran baru.</div>
+            </div>
+        </div>
+        <div class="episode">
+            <img src="3.jpg" alt="Eps 2" class="eps-img" onerror="this.style.background='#333'">
+            <div class="eps-body">
+                <div class="eps-number">Episode 2</div>
+                <div class="eps-title">Kejutan<br>di Hari Spesial</div>
+                <div class="eps-year">2022</div>
+                <div class="eps-desc">Di tengah kesibukan, sebuah momen manis tercipta. Waktu bersama membuat hati berbunga-bunga.</div>
+            </div>
+        </div>
+        <div class="episode">
+            <img src="4.jpg" alt="Eps 3" class="eps-img" onerror="this.style.background='#333'">
+            <div class="eps-body">
+                <div class="eps-number">Episode 3</div>
+                <div class="eps-title">Janji<br>Sehidup Semati</div>
+                <div class="eps-year">2026</div>
+                <div class="eps-desc">Sebuah langkah besar diambil. Keduanya mantap mengikat janji untuk mengarungi sisa hidup bersama-sama.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="doc-header"><span class="icon">🎁</span> WEDDING GIFT</div>
+        <h2 class="section-title">Kirim Tanda Kasih</h2>
+        <p class="doc-desc">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun, bagi Anda yang ingin memberikan tanda kasih, dapat melalui nomor rekening di bawah ini:</p>
+        
+        <div class="gift-box">
+            <div class="bank-name">BCA</div>
+            <div class="bank-number" id="rekening-bca">1081 6128 09</div>
+            <div class="bank-owner">a.n. Dani / Ecca</div>
+            <button class="btn-copy" onclick="var r=document.getElementById('rekening-bca').innerText.replace(/\s/g, ''); navigator.clipboard.writeText(r); alert('Nomor Rekening BCA Berhasil Disalin!');">Salin No. Rekening</button>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section-padding">
+        <h2 class="section-title">Buku Tamu</h2>
+        <p class="doc-desc">Tinggalkan pesan, doa, dan harapan untuk kedua mempelai.</p>
+        
+        <div>
+            <input type="text" id="nama-pengirim" class="form-input" placeholder="Nama Anda">
+            <textarea id="pesan-pengirim" class="form-input" rows="4" placeholder="Tuliskan doa & ucapan..."></textarea>
+            <button class="btn-confirm" onclick="kirimUcapan()" style="margin-top: 0;">Kirim Ucapan</button>
+        </div>
+
+        <div class="message-list" id="daftar-ucapan">
+            <div class="message-card">
+                <div class="msg-name">Keluarga Besar</div>
+                <div class="msg-text">Selamat menempuh hidup baru untuk Dani & Ecca. Semoga menjadi keluarga yang sakinah, mawaddah, warahmah.</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="closing-photo-wrap" style="padding-top: 36px;">
+        <img src="1.jpg" alt="Dani & Ecca" onerror="this.style.background='#222'">
+        <div class="closing-caption">
+            See you on
+            <strong>24 Mei 2026 ✦ Dani & Ecca</strong>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function bukaUndangan() {
+        document.getElementById('splash-screen').style.display='none'; 
+        document.getElementById('main-content').style.display='block'; 
+        try { document.getElementById('bg-music').play(); } catch(e) {}
+    }
+
+    function toggleMusic() {
+        const m = document.getElementById('bg-music');
+        const btn = document.getElementById("music-btn");
+        if (m.paused) {
+            m.play();
+            btn.innerHTML = '🔊';
+        } else {
+            m.pause();
+            btn.innerHTML = '🔇';
+        }
+    }
+
+    function kirimUcapan() {
+        const nama = document.getElementById("nama-pengirim").value;
+        const pesan = document.getElementById("pesan-pengirim").value;
+        
+        if(nama.trim() === "" || pesan.trim() === "") {
+            alert("Mohon isi nama dan ucapan terlebih dahulu.");
+            return;
+        }
+
+        const daftarUcapan = document.getElementById("daftar-ucapan");
+        const kartuBaru = document.createElement("div");
+        kartuBaru.className = "message-card";
+        kartuBaru.innerHTML = `<div class="msg-name">${nama}</div><div class="msg-text">${pesan}</div>`;
+        
+        daftarUcapan.insertBefore(kartuBaru, daftarUcapan.firstChild);
+        document.getElementById("nama-pengirim").value = "";
+        document.getElementById("pesan-pengirim").value = "";
+        alert("Ucapan berhasil dikirim! Terima kasih.");
+    }
+</script>
+</body>
+</html>
